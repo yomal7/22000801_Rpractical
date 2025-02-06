@@ -1,0 +1,97 @@
+---
+title: R Markdown - 22000801 
+output: html_document
+---
+
+```{r}
+#Activity 01
+weight <- c(14,22,33,45,56,23,12,56,45,34,23,11,17,3,5,23,34,38,54,6,7,24,48,46)
+hist(weight, breaks = seq(0, 70, by = 5), main = "Weight Distribution", 
+     xlab = "Weight (Kg)", col = "yellow", xlim = c(0,70), ylim = c(0,10))
+```
+
+```{r}
+#Activity 02
+type <- c('Comedy', 'Action', 'Romance', 'Drama', 'Sifi')
+No_of_Likes <- c(40, 50, 60, 10, 30)
+
+pie(No_of_Likes, labels = type, col = rainbow(length(No_of_Likes)), 
+    main = "Favorite type of Movie")
+percentage <- round(No_of_Likes/sum(No_of_Likes)*100)
+label <- paste(percentage, "%", sep = "")
+pie(No_of_Likes, labels = label, col = rainbow(length(No_of_Likes)), 
+    main = "Favorite type of Movie")
+
+barplot(No_of_Likes, names.arg = type, xlab = "Movie Type" ,ylab = "No of Likes",
+        main = "Favourite type of Movie", col = "red" , border = "yellow")
+```
+
+```{r}
+#Activity 03
+mydata <- sample(1:100, 20, replace = 3)
+mydata
+stem(mydata)
+```
+
+```{r}
+#Activity 04
+#install.packages("moments")
+library(moments)
+dataset1 = read.csv("heart.csv")
+dataset2 = read.csv("games.csv")
+boxplot(dataset1$MaxHR ~ dataset1$Sex,
+       xlab = "Sex", ylab = "Maximum Heart Rate",
+       col = c("purple", "yellow"))
+
+m_maxhr <- subset(dataset1, Sex == "M", select = MaxHR)
+f_maxhr <- subset(dataset1, Sex == "F", select = MaxHR)
+
+print(paste("M skewness: " , skewness(m_maxhr)))
+print(paste("F skewness: " , skewness(f_maxhr)))     
+
+boxplot(dataset2$turns ~ dataset2$winner,
+       xlab = "Winner of the game", ylab = "No of turns", main = "Chess game summay",
+       col = c("green", "blue","red"))
+
+white <- subset(dataset2, winner == "white", select = turns)
+black <- subset(dataset2, winner == "black", select = turns)
+draw <- subset(dataset2, winner == "draw", select = turns)
+
+print(paste("white skewness: " , skewness(white)))
+print(paste("black skewness: " , skewness(black))) 
+print(paste("draw skewness: " , skewness(draw))) 
+
+```
+
+M has outliers.
+F and M are left skewed.
+
+black, draw, white all three have outliers.
+black , white, draw all are Righ skewed.
+
+```{r}
+set.seed(789)
+mydata1 <- rnorm(100, mean = 50, sd = 5)
+boxplot(mydata1)
+summary(mydata1)
+range_val = range(mydata1)
+print("mydata1 range : ")
+range_val
+print(paste("mydata1 skewness : ", skewness(mydata)))
+
+```
+
+This has outliers.
+
+```{r}
+#Activity 05
+plot(USArrests$Murder, USArrests$Assault,
+main = "USA arrest rates",
+xlab = "Murders",
+ylab = "Assaults",
+xlim = c(8.0, 14.0),
+ylim = c(150, 300),
+col = "blue",
+pch = 16)
+```
+
