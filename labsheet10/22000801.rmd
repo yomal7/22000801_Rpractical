@@ -1,0 +1,99 @@
+---
+title: An R Markdown document converted from "22000801.ipynb"
+output: html_document
+---
+
+```{r}
+#Activity 01
+dataset <- read.csv("heart.csv")
+dataset
+```
+
+```{r}
+numofrows <- 0
+for(i in 1:nrow(dataset)){
+    numofrows <- numofrows + 1
+}
+print(paste('number of rows = ', numofrows))
+```
+
+```{r}
+min_val <- min(dataset$RestingBP, na.rm = TRUE)
+max_val <- max(dataset$RestingBP, na.rm = TRUE)
+mean_val <- mean(dataset$RestingBP, na.rm = TRUE)
+median_val <- median(dataset$RestingBP, na.rm = TRUE)
+summary <- paste("Min:", min_val, "Max:", max_val,"Median:", median_val, "Mean:", mean_val)
+print(summary)
+```
+
+```{r}
+numofPatients <- 0
+for(i in 1:nrow(dataset)){
+    bp = dataset$RestingBP[i]
+    if(!is.na(bp) && bp > mean_val){
+        numofPatients <- numofPatients + 1
+    }
+}
+print(paste("number of patients with higher RestingBP : ", numofPatients))
+```
+
+```{r}
+unique_chestpains <- unique(dataset$ChestPainType)
+print(unique_chestpains)
+```
+
+```{r}
+count <- 0
+for (i in 1:nrow(dataset)) {
+    if (dataset$RestingBP[i] > 140 & dataset$Sex[i] == "F" & count < 10) {
+        print(dataset$Age[i])
+        count <- count + 1
+    }
+}
+```
+
+```{r}
+check_HeartDisease <- function(row){
+    if(row$HeartDisease == 1){
+        print(paste("Age : " , row$Age, "Sex : " , row$Sex))
+    } else {
+        print("Do not have a heart disease")
+    }
+}
+check_HeartDisease(dataset[1,]) #first row
+check_HeartDisease(dataset[2,]) #second row
+```
+
+```{r}
+check_Cholesterol <- function(row){
+    if(row$Cholesterol	< 200){
+        print("Low")
+    }else{
+        print("High")
+    }
+}
+check_Cholesterol(dataset[1, ])
+check_Cholesterol(dataset[2, ])
+```
+
+```{r}
+#Activity 02
+cities <- c("Colombo", "Kandy", "Galle" , "Anuradhapura", "Trincomalee", "Jaffna")
+population <- c(580000, 450000, 330000, 380000, 280000, 310000)
+pie(population, labels = cities , main = "City Population" , col = rainbow(length(cities)))
+```
+
+```{r}
+percentages <- round(population / sum(population) * 100)
+labels <- paste(percentages, "%", sep = "")
+pie(population, labels = labels , main = "City Population" , col = rainbow(length(cities)))
+```
+
+```{r}
+#Activity 03
+Year <- c("2015", "2016", "2017", "2018", "2019")
+Yearly_income <- c(1320000, 1500000, 2002000, 1980000, 1520000)
+barplot(Yearly_income, names.arg = Year , col = "red" , border = "blue",
+        xlab = "Year", ylab = "Yearly Income", main = "Income")
+```
+
